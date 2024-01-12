@@ -35,8 +35,8 @@ variable "region" {
   default     = "eastus"
 }
 
-module "avd" {
-  source = "../../modules/avd"
+module "avd-personal-desktop" {
+  source = "../../modules/avd-personal-desktop"
 
   // AVD Settings
   prefix                            = "cglabs-avdpoc"
