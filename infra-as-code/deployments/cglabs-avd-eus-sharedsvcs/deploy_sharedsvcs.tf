@@ -8,6 +8,9 @@ terraform {
       source = "hashicorp/azuread"
     }
   }
+  backend "local" {
+    path = "../../../saved_state/cglabs-avd-eus-sharedsvcs.tfstate"
+  }
 }
 
 provider "azurerm" {
