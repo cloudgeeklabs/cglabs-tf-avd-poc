@@ -51,19 +51,19 @@ source "azure-arm" "createImage" {
   managed_image_resource_group_name = "${var.acgResGroup}"
   os_type                           = "Windows"
   shared_image_gallery_destination {
-    gallery_name        = "${var.gallery_name}"
-    image_name          = "${var.image_name}"
-    image_version       = "${var.image_version}"
-    replication_regions = "${var.replication_regions}"
-    resource_group      = "${var.acgResGroup}"
+    gallery_name                    = "${var.gallery_name}"
+    image_name                      = "${var.image_name}"
+    image_version                   = "${var.image_version}"
+    replication_regions             = "${var.replication_regions}"
+    resource_group                  = "${var.acgResGroup}"
   }
-  subscription_id = "${var.subscription_id}"
-  tenant_id       = "${var.tenant_id}"
-  vm_size         = "${var.vm_size}"
-  winrm_insecure  = true
-  winrm_timeout   = "3m"
-  winrm_use_ssl   = true
-  winrm_username  = "packer"
+  subscription_id                   = "${var.subscription_id}"
+  tenant_id                         = "${var.tenant_id}"
+  vm_size                           = "${var.vm_size}"
+  winrm_insecure                    = true
+  winrm_timeout                     = "3m"
+  winrm_use_ssl                     = true
+  winrm_username                    = "packer"
 }
 
 build {
