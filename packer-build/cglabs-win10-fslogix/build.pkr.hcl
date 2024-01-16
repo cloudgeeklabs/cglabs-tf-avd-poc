@@ -77,7 +77,7 @@ build {
 
   // Example of Image Specific Script
   provisioner "powershell" {
-    script = "./packer-build/hostpool01/scripts/example-software.ps1"
+    script = "./packer-build/cglabs-win10-fslogix/scripts/fslogixInstall.ps1.ps1"
   }
 
   // Restart VM before Sysprep to make sure it is a clean caputer
