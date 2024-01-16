@@ -4,11 +4,6 @@ variable "region" {
   description = "The Azure Region for resources"
 }
 
-variable "packerAppName" {
-  type        = string
-  description = "Packer App Registration Name"
-}
-
 variable "resgroup" {
   type        = string
   description = "Name of the Resource group in which to deploy shared resources."
@@ -68,6 +63,11 @@ variable "avd-law-sku_name" {
   type        = string
   default     = "PerGB2018"
   description = "LAW SKU"
+}
+
+variable "avd-acg-umi" {
+  type = string
+  description = "User-Managed Identity for Azure Compute Gallery"
 }
 
 variable "avd-storageaccount-name" {

@@ -28,16 +28,3 @@ output "AVDLAWId" {
 output "AVDArtifactsURL" {
   value       = azurerm_storage_account.avdsa.id
 }
-
-output "app_clientSecret" {
-    value = azuread_application_password.packer.value
-    sensitive = true
-}
-
-output "packer_clientId_SecretName" {
-  value = azurerm_key_vault_secret.client_id.name
-}
-
-output "packer_clientSecret_SecretName" {
-  value = azurerm_key_vault_secret.client_secret.name
-}

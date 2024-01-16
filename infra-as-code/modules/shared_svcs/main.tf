@@ -1,17 +1,9 @@
 # Load up Azure Tenant Configuration
 data "azurerm_client_config" "current" {}
-
-# Create Packer AppReg
-# https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application
-# TF App requires permission to create AppRegistrations in AAD
-resource "azuread_application_registration" "packer" {
-  display_name = var.packerAppName
+data "azurerm_subscription" "subscription" {}
+data "azurerm_resource_group" "vnetrg" {
+  name = "cglabs-avd-eus-networking"
 }
-
-resource "azuread_application_password" "packer" {
-  application_id = azuread_application_registration.packer.id
-}
-
 
 # Create ResourceGroup for AVD Shared Resources
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group
@@ -19,6 +11,16 @@ resource "azurerm_resource_group" "avdsharedresources" {
   location = var.region
   name     = var.resgroup
   tags     = var.resourcetags 
+}
+
+# Create User Managed Identity for Accessing KeyVault and other Resources
+# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/user_assigned_identity
+resource "azurerm_user_assigned_identity" "acg-umi" {
+  name                = var.avd-acg-umi
+  resource_group_name = azurerm_resource_group.avdsharedresources.name
+  location            = azurerm_resource_group.avdsharedresources.location
+  tags                = var.resourcetags
+
 }
 
 # Creates Shared Image Gallery
@@ -29,6 +31,27 @@ resource "azurerm_shared_image_gallery" "acg" {
   location            = azurerm_resource_group.avdsharedresources.location
   description         = var.avd-acg-name
   tags                = var.resourcetags
+}
+
+# Set RBAC Permissions on Compute Image Gallery
+resource "azurerm_role_assignment" "acg-role-assignment" {
+  scope                 = azurerm_shared_image_gallery.acg.id
+  role_definition_name  = "Contributor"
+  principal_id          = azurerm_user_assigned_identity.acg-umi.principal_id
+}
+
+# Set RBAC Permissions to Subscription
+resource "azurerm_role_assignment" "acg-role-subscription-assignment" {
+  scope                 = data.azurerm_subscription.subscription.id
+  role_definition_name  = "Contributor"
+  principal_id          = azurerm_user_assigned_identity.acg-umi.principal_id
+}
+
+# Set RBAC Permissions to Network Resource Group
+resource "azurerm_role_assignment" "acg-role-vnet-assignment" {
+  scope                 = data.azurerm_resource_group.vnetrg.id
+  role_definition_name  = "Contributor"
+  principal_id          = azurerm_user_assigned_identity.acg-umi.principal_id
 }
 
 # Create Image Definition -- This is required for the use of Packer as it can't create the Image Definition and must reference and existing. 
@@ -100,17 +123,6 @@ resource "random_password" "avd_local_admin" {
 # Add Secrets to KeyVault
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault_secret
 # TF App requires access to Key Vault Data Plane to execute this part
-resource "azurerm_key_vault_secret" "client_id" {
-  name              = "${var.packerAppName}-client-id"
-  value             = azuread_application_registration.packer.client_id
-  key_vault_id      = azurerm_key_vault.avdkv.id
-}
-
-resource "azurerm_key_vault_secret" "client_secret" {
-  name              = "${var.packerAppName}-client-secret"
-  value             = azuread_application_password.packer.value
-  key_vault_id      = azurerm_key_vault.avdkv.id
-}
 
 resource "azurerm_key_vault_secret" "avd_local_admin_password" {
   name              = "avd-local-admin-password"

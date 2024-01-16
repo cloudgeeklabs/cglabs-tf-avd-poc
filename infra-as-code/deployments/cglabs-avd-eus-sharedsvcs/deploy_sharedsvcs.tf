@@ -8,8 +8,13 @@ terraform {
       source = "hashicorp/azuread"
     }
   }
-  backend "local" {
-    path = "../../../saved_state/cglabs-avd-eus-sharedsvcs.tfstate"
+  backend "azurerm" {
+    resource_group_name  = "cglabs-avd-tfstate"
+    storage_account_name = "cglabsavdtfstate"
+    container_name       = "cglabs-avd-prod-tfstate"
+    key                  = "prod-shared-srvs.terraform.tfstate"
+    subscription_id      = "197f4130-ef26-4439-a354-eb5a2a2d7f85"
+    tenant_id            = "65be193c-ba88-4b25-9f1d-bd342309bea6"
   }
 }
 
@@ -43,15 +48,13 @@ variable "region" {
 module "sharedsvc" {
   source = "../../modules/shared_svcs"
 
-  // Deploy AAD Resources
-  packerAppName                     = "cglabs-packer-app"
-
   // Deploy Resource Group
   resgroup                          = "cglabs-avd-eus-sharedsvcs"
   region                            = var.region
   resourcetags                      = var.resourcetags
   
   // Deploy Azure Compute Gallery
+  avd-acg-umi                       = "cglabs-acg-umi"
   avd-acg-name                      = "cglabsavdeusacg"
   avd-acg-image-name                = "cglabs-hostpool01" 
   avd-acg-image-os_type             = "Windows"
@@ -61,7 +64,7 @@ module "sharedsvc" {
   avd-acg-image-sku                 = "poc"
 
   // Deploy Azure Storage Account
-  avd-storageaccount-name           = "cglabsavdeussa01"
+  avd-storageaccount-name           = "cglabsavdeusfiles"
 
   // Deploy LAW for AVD Diagnostic Data
   avd-law-name                      = "cglabs-avd-eus-law"
@@ -69,6 +72,6 @@ module "sharedsvc" {
   avd_law-retention_in_days         = 90
 
   // Deploy Keyvault
-  avd-kv-name                       = "cglabsavdeusvlt"
+  avd-kv-name                       = "cglabsavdeusvault"
   avd-kv-sku                        = "standard"  
 }
