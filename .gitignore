@@ -7,10 +7,10 @@
 *.terraform.*
 
 # .tfplan files
-*tfplan
+**/main.tfplan
 
 # TF Lock files
-.terraform.lock*
+**/.terraform.lock*
 
 # Crash log files
 crash.log
