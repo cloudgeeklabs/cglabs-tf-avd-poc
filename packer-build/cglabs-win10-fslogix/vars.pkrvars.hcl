@@ -10,6 +10,6 @@ location            = "eastus"
 vm_size             = "Standard_D4s_v5"
 replication_regions = ["EastUS"]
 azure_tags          = {
-    notes = "Windows 10 Dedicated Workstation with Office 365 ProPlus"
+    notes = "Windows 10 with FSLogix and Office 365 ProPlus"
     owner = "BenTheBuilder"
 }

@@ -69,10 +69,15 @@ source "azure-arm" "createImage" {
 build {
   sources = ["source.azure-arm.createImage"]
 
-  // Load SetupComplete2
+  // Example of a Shared Config
   provisioner "file" {
     destination = "c:\\Windows\\OEM\\SetupComplete2.cmd"
     source      = "./packer-build/sharedScripts/simple_SetupComplete2.cmd"
+  }
+
+  // Example of Image Specific Script
+  provisioner "powershell" {
+    script = "./packer-build/hostpool01/scripts/example-software.ps1"
   }
 
   // Restart VM before Sysprep to make sure it is a clean caputer
