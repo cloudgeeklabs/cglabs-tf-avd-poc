@@ -1,0 +1,19 @@
+name: Testing SelfHosted Runner
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: AzureHosted
+  
+  steps:
+  - name: 'Checkout Github Action'
+    uses: actions/checkout@v3
+
+  - name: 'Verify Local'
+    shell: pwsh
+    run: 'terraform --version'
+
+    
