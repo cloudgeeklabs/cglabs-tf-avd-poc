@@ -2,7 +2,7 @@ name: Deploy Shared Infrastructure
 
 on:
   push:
-    branches: [master]
+    branches: [main]
 
 jobs:
   test-terraform:
@@ -10,7 +10,7 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-      
+
     - name: 'Verify Terraform Installed'
       shell: pwsh
       run: 'terraform --version'
