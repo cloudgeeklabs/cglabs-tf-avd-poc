@@ -5,15 +5,11 @@ on:
     branches: [master]
 
 jobs:
-  build:
+  test-terraform:
     runs-on: AzureHosted
-  
-  steps:
-  - name: 'Checkout Github Action'
-    uses: actions/checkout@v3
-
-  - name: 'Verify Local'
-    shell: pwsh
-    run: 'terraform --version'
+    steps:
+    - name: 'Verify Terraform Installed'
+      shell: pwsh
+      run: 'terraform --version'
 
     
