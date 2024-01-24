@@ -8,6 +8,9 @@ jobs:
   test-terraform:
     runs-on: AzureHosted
     steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
     - name: 'Verify Terraform Installed'
       shell: pwsh
       run: 'terraform --version'
