@@ -6,7 +6,7 @@ on:
 
 jobs:
   test-terraform:
-    runs-on: Default
+    runs-on: self-hosted
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
