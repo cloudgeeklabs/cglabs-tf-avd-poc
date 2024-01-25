@@ -14,3 +14,11 @@ jobs:
     - name: 'Verify Terraform Installed'
       shell: pwsh
       run: 'terraform --version'
+
+    - name: 'Verify Terraform Installed'
+      shell: pwsh
+      run: '$host'
+
+    - name: 'Verify Terraform Installed'
+      shell: pwsh
+      run: 'Get-AdDomain'
