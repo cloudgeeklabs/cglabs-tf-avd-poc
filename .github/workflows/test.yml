@@ -6,7 +6,7 @@ on:
 
 jobs:
   test-terraform:
-    runs-on: AzureHosted
+    runs-on: Default
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
