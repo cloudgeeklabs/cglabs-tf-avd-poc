@@ -13,7 +13,11 @@ jobs:
 
     - name: Login Azure Cli
       shell: pwsh
-      run: 'az login --identity --subscription "cglabs-avd-poc"'
+      run: 'az login --identity'
+
+    - name: Set AVD PoC Subscription
+      shell: pwsh
+      run: 'az account set --subscription "cglabs-avd-poc"'
 
     - name: 'Terraform Init'
       shell: pwsh
