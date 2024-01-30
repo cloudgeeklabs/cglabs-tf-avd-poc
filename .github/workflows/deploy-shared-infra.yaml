@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  test-terraform:
+  test-self-hosted-runner:
     runs-on: self-hosted
     steps:
     - name: Checkout repository
@@ -22,3 +22,11 @@ jobs:
     - name: 'Verify Access to Local Domain'
       shell: pwsh
       run: 'Get-AdDomain cglabs.work'
+
+    - name: 'Verify AZ CLI Version'
+      shell: pwsh
+      run: 'az --version'
+
+    - name: 'Verify Packer Version'
+      shell: pwsh
+      run: 'packer --version'
