@@ -11,7 +11,7 @@ terraform {
   backend "azurerm" {
     resource_group_name  = "cglabs-avd-tfstate"
     storage_account_name = "cglabsavdtfstate"
-    container_name       = "cglabs-avd-prod-tfstate"
+    container_name       = "cglabs-avd-poc-tfstate"
     key                  = "prod-shared-srvs.terraform.tfstate"
     subscription_id      = "197f4130-ef26-4439-a354-eb5a2a2d7f85"
     tenant_id            = "65be193c-ba88-4b25-9f1d-bd342309bea6"
@@ -49,7 +49,7 @@ module "sharedsvc" {
   source = "../../modules/shared_svcs"
 
   // Deploy Resource Group
-  resgroup                          = "cglabs-avd-eus-sharedsvcs"
+  resgroup                          = "cglabs-avd-poc-sharedsvcs"
   region                            = var.region
   resourcetags                      = var.resourcetags
   
