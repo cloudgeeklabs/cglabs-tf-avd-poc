@@ -15,6 +15,10 @@ jobs:
       shell: pwsh
       run: 'az login --identity'
 
-    - name: 'Verify Terraform Installed'
+    - name: 'Terraform Init'
       shell: pwsh
       run: 'terraform -chdir=".\infra-as-code\deployments\cglabs-avd-eus-sharedsvcs" init'
+
+    - name: 'Terraform Plan'
+      shell: pwsh
+      run: 'terraform -chdir=".\infra-as-code\deployments\cglabs-avd-eus-sharedsvcs" plan -out sharedsrvs.tfplan'
