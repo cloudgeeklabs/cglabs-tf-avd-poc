@@ -13,7 +13,7 @@ jobs:
 
     - name: Login Azure Cli
       shell: pwsh
-      run: 'az login --identity'
+      run: 'az login --identity --subscription "cglabs-avd-poc"'
 
     - name: 'Terraform Init'
       shell: pwsh
@@ -22,3 +22,7 @@ jobs:
     - name: 'Terraform Plan'
       shell: pwsh
       run: 'terraform -chdir=".\infra-as-code\deployments\cglabs-avd-eus-sharedsvcs" plan -out sharedsrvs.tfplan'
+
+    - name: Logout Azure Cli
+      shell: pwsh
+      run: 'az logout'
