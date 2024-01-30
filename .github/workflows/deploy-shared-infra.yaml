@@ -15,10 +15,10 @@ jobs:
       shell: pwsh
       run: 'terraform --version'
 
-    - name: 'Verify Terraform Installed'
+    - name: 'Verify PWSH Version'
       shell: pwsh
       run: '$host'
 
-    - name: 'Verify Terraform Installed'
+    - name: 'Verify Access to Local Domain'
       shell: pwsh
-      run: 'Get-AdDomain'
+      run: 'Get-AdDomain cglabs.work'
