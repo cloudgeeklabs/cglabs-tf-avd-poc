@@ -11,6 +11,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
+    - name: Login Azure Cli
+      shell: pwsh
+      run: 'az login --identity'
+
     - name: 'Verify Terraform Installed'
       shell: pwsh
       run: 'terraform -chdir=".\infra-as-code\deployments\cglabs-avd-eus-sharedsvcs" init'
