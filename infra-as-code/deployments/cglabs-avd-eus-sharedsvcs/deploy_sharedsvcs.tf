@@ -15,11 +15,13 @@ terraform {
     key                  = "prod-shared-srvs.terraform.tfstate"
     subscription_id      = "197f4130-ef26-4439-a354-eb5a2a2d7f85"
     tenant_id            = "65be193c-ba88-4b25-9f1d-bd342309bea6"
+    use_msi              = true
   }
 }
 
 provider "azurerm" {
   features {}
+  use_msi = true
 }
 
 
